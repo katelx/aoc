@@ -1,0 +1,2 @@
+# aoc
+adventofcode.com solutions
