@@ -2,6 +2,8 @@ import qualified Day01
 import qualified Day02
 import qualified Day03
 import qualified Day04
+import qualified Day05
+import qualified Day06
 
 import Control.Monad
 import Control.Applicative
@@ -10,7 +12,9 @@ days = [
   Day01.solvers,
   Day02.solvers,
   Day03.solvers,
-  Day04.solvers
+  Day04.solvers,
+  Day05.solvers,
+  Day06.solvers
   ]
 
 
