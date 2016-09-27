@@ -49,4 +49,4 @@ evalMap m = evalMap $ M.map (\g -> case (toRaw g m) of
 
 solve solver = show . eval (Named "a") . evalMap . solver . M.fromList . map parse . map words . lines
 
-solvers = [solve id, solve (M.insert "b" (Raw 16076))]
+solvers = [solve id, \input -> solve (M.insert "b" (Raw . read . solve id $ input)) input]

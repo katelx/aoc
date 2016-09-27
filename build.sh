@@ -1,2 +1,2 @@
 #!/bin/bash
-ghc runner.hs day*/solution.hs
+ghc -rtsopts runner.hs day*/solution.hs

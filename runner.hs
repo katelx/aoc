@@ -7,9 +7,14 @@ import qualified Day06
 import qualified Day07
 import qualified Day08
 import qualified Day09
+import qualified Day10
+import qualified Day11
+import qualified Day12
+import qualified Day13
 
 import Control.Monad
 import Control.Applicative
+import Text.Printf(printf)
 
 days = [
   Day01.solvers,
@@ -20,7 +25,11 @@ days = [
   Day06.solvers,
   Day07.solvers,
   Day08.solvers,
-  Day09.solvers
+  Day09.solvers,
+  Day10.solvers,
+  Day11.solvers,
+  Day12.solvers,
+  Day13.solvers
   ]
 
 
@@ -31,8 +40,8 @@ runDay n = do
   input <- readFile path
   mapM_ run $ zip (solvers <*> [input]) [1..]
   putStrLn ""
-  where day = show n
-        path = "day0" ++ day ++ "/input"
+  where day = printf "%02d" n
+        path = "day" ++ day ++ "/input"
         solvers = days !! (n-1)
 
 main = do
