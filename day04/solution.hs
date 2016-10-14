@@ -1,5 +1,5 @@
-module Day04(solvers) where
-       
+module Main where
+import Runner
 import Crypto.Hash.MD5
 import Data.List(isPrefixOf)
 
@@ -24,7 +24,7 @@ findMD5 prefix key n =
 
 solve zeros key = findMD5 (B.pack zeros) (B.pack key) 0
 
-solvers = [solve "00000", solve "000000"]
+main = runDay 4 [solve "00000", solve "000000"]
 
 toHex bs = unsafeCreate nl (go 0)
   where len = B.length bs

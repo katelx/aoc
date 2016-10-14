@@ -1,5 +1,5 @@
-module Day07(solvers) where
-
+module Main where
+import Runner
 import qualified Data.Map as M
 import Data.Maybe(fromJust,isJust)
 import Data.Char(isDigit)
@@ -49,4 +49,4 @@ evalMap m = evalMap $ M.map (\g -> case (toRaw g m) of
 
 solve solver = show . eval (Named "a") . evalMap . solver . M.fromList . map parse . map words . lines
 
-solvers = [solve id, \input -> solve (M.insert "b" (Raw . read . solve id $ input)) input]
+main = runDay 7 [solve id, \input -> solve (M.insert "b" (Raw . read . solve id $ input)) input]

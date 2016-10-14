@@ -1,5 +1,5 @@
-module Day03(solvers) where
-
+module Main where
+import Runner
 import Data.List(nub,partition)
 
 val '^' = (0, 1)
@@ -17,4 +17,4 @@ calcTrails = concat . map calcTrail . splitEvenOdd
 
 solve solver = show . length . nub . solver . map val 
 
-solvers = [solve calcTrail, solve calcTrails]
+main = runDay 3 [solve calcTrail, solve calcTrails]

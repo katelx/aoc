@@ -1,5 +1,5 @@
-module Day10(solvers) where
-
+module Main where
+import Runner
 import Data.List(group)
 
 calc 0 ns = ns
@@ -9,4 +9,4 @@ calc n ns = calc (n-1) res
 
 solve solver = show . length . calc solver
 
-solvers = [solve 40, solve 50]
+main = runDay 10 [solve 40, solve 50]

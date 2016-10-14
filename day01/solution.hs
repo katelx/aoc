@@ -1,5 +1,6 @@
-module Day01(solvers) where
-
+module Main where
+import Runner
+  
 val '(' = 1
 val ')' = -1
 
@@ -7,4 +8,4 @@ firstNegative = length . takeWhile (>=0) . scanl (+) 0
 
 solve solver = show . solver . map val
 
-solvers = [solve sum, solve firstNegative]
+main = runDay 1 [solve sum, solve firstNegative]

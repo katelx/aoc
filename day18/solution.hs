@@ -1,5 +1,5 @@
-module Day18(solvers) where
-
+module Main where
+import Runner
 import qualified Data.Map as M
 
 data Switch = On|Off|Perm 
@@ -31,4 +31,4 @@ setPerm d = foldl (\d' k -> M.insert k Perm d') d [(1,1),(1,100),(100,1),(100,10
 
 solve solver = show . cnt . maponoff 100 . solver . parse . lines
 
-solvers = [solve id, solve setPerm]
+main = runDay 18 [solve id, solve setPerm]

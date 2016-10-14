@@ -1,5 +1,5 @@
-module Day06(solvers) where
-
+module Main where
+import Runner
 import Data.List(foldl', foldl1')
 
 type Point = (Int, Int)
@@ -36,4 +36,4 @@ summarize folder switches =  map (\cords -> foldl' (folder cords) 0 switches) ma
 
 solve folder = show . foldl1' (+) . summarize folder . map parse . map words . lines
 
-solvers = [solve switch, solve bright]
+main = runDay 6 [solve switch, solve bright]

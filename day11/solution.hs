@@ -1,5 +1,5 @@
-module Day11(solvers) where
-
+module Main where
+import Runner
 import Control.Applicative
 import Data.List(nub, group)
 
@@ -23,4 +23,4 @@ next pass = next $ succs pass
 
 solve solver = solver
 
-solvers = [solve next, solve (next . succs . next)]
+main = runDay 11 [solve next, solve (next . succs . next)]

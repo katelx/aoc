@@ -1,5 +1,5 @@
-module Day09(solvers) where
-
+module Main where
+import Runner
 import Data.Maybe(fromJust)
 import Data.List(nub, permutations)
 import qualified Data.Map as M
@@ -21,4 +21,4 @@ calc ds = map (dist m) p
 
 solve solver = show . solver . calc . double . map parse . map words . lines
 
-solvers = [solve minimum, solve maximum]
+main = runDay 9 [solve minimum, solve maximum]

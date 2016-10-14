@@ -1,5 +1,5 @@
-module Day14(solvers) where
-
+module Main where
+import Runner
 import Data.Char(isDigit)
 import Data.List(replicate, scanl1, transpose)
 
@@ -15,8 +15,7 @@ calc ct mt _ c@(_, _, r)
 points ds = map (length . filter (\x -> fst x == snd x) . zip mxs) $ dsc
   where dsc = map (scanl1 (+)) ds
         mxs = map maximum . transpose $ dsc
-        
 
 solve solver = show . maximum . solver . map (calc 0 2503 True) . map parse . map words . lines
 
-solvers = [solve (map sum), solve points]
+main = runDay 14 [solve (map sum), solve points]

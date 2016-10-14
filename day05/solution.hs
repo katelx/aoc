@@ -1,5 +1,5 @@
-module Day05(solvers) where
-
+module Main where
+import Runner
 import Control.Applicative
 import Data.List(sort, group, isInfixOf)
 
@@ -26,4 +26,4 @@ nice predicates = and . (<*>) predicates . pure
 
 solve predicates = show . length . filter (nice predicates) . words
 
-solvers = [solve [threeVowels, duplicates, illegal], solve [pair, threesome]]
+main = runDay 5 [solve [threeVowels, duplicates, illegal], solve [pair, threesome]]

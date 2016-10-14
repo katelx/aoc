@@ -1,4 +1,5 @@
-module Day08(solvers) where
+module Main where
+import Runner
 
 countMem [] = 0
 countMem ('\\':'\\':xs) = 1 + countMem xs
@@ -17,4 +18,4 @@ escSolve str = countEsc str - length str
 
 solve solver = show . sum . map solver . lines
 
-solvers = [solve memSolve, solve escSolve]
+main = runDay 8 [solve memSolve, solve escSolve]

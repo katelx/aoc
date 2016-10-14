@@ -1,5 +1,5 @@
-module Day17(solvers) where
-
+module Main where
+import Runner
 import Data.List(delete)
 
 comb xs k = comb' (length xs) k xs
@@ -16,4 +16,4 @@ mins ns = length . filter (\x -> length x == minl) $ ns
 
 solve solver = show . solver . calc . map read . lines
 
-solvers = [solve length, solve mins]
+main = runDay 17 [solve length, solve mins]

@@ -1,5 +1,5 @@
-module Day15(solvers) where
-
+module Main where
+import Runner
 import Data.Char(isDigit)
 import Data.List(zipWith, transpose)
 
@@ -21,4 +21,4 @@ calc calpred ing = maximum . map (score calpred ting) $ qty
 
 solve solver = show . calc solver . map parse . lines
 
-solvers = [solve (\_ -> True), solve (==500)]
+main = runDay 15 [solve (\_ -> True), solve (==500)]

@@ -1,5 +1,5 @@
-module Day12(solvers) where
-
+module Main where
+import Runner
 import Text.JSON
 
 parse _ (JSRational _ num) = truncate num
@@ -15,4 +15,4 @@ emptyIfRed xs = if all (isNotRed . snd) $ xs then xs else []
 
 solve solver = show . parse solver . res . decode 
   
-solvers = [solve id, solve emptyIfRed]
+main = runDay 12 [solve id, solve emptyIfRed]

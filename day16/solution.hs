@@ -1,5 +1,5 @@
-module Day16(solvers) where
-
+module Main where
+import Runner
 import Data.List(sort)
 
 parsep [] = []
@@ -34,4 +34,4 @@ tt = [
   ("cars", 2),
   ("perfumes", 1)]
 
-solvers = [solve cntEq, solve cntSp]
+main = runDay 16 [solve cntEq, solve cntSp]
