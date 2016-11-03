@@ -1,19 +1,17 @@
 module Main where
 import Runner
-import Data.List(nub,partition)
+import Data.List(nub,partition,zipWith)
 
-val '^' = (0, 1)
-val '>' = (1, 0)
-val 'v' = (0, -1)
-val '<' = (-1, 0)
+val '^' = [0, 1]
+val '>' = [1, 0]
+val 'v' = [0, -1]
+val '<' = [-1, 0]
 
-tupAdd (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
+calcTrail = scanl (zipWith (+)) [0, 0]
 
-calcTrail = scanl tupAdd (0, 0)
-
-splitEvenOdd = map (map snd) . (\t -> [fst t, snd t]) . partition (even . fst) . zip [1..]
-
-calcTrails = concat . map calcTrail . splitEvenOdd
+calcTrails = trails . partition (even . fst) . zip [1..]
+  where trail = calcTrail . map snd
+        trails (x, y) = trail x ++ trail y
 
 solve solver = show . length . nub . solver . map val 
 
