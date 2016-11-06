@@ -1,39 +1,47 @@
 module Main where
 import Runner
-import Data.List(foldl', foldl1')
+import Data.Array.IO
+import Data.Array.Base
+import Control.Monad
 
-type Point = (Int, Int)
 data Switch = On | Off | Toggle
 
-parseTuple :: String -> Point
 parseTuple cords = read cords' where cords' = "(" ++ cords ++ ")"
-parseSwitch switch tl br = (switch, parseTuple tl, parseTuple br)
+parseSwitch switch tl br = (switch, (parseTuple tl, parseTuple br))
 
+parse :: [String] -> (Switch, ((Int, Int), (Int, Int)))
 parse ("toggle":tl:_:br:[]) = parseSwitch Toggle tl br
 parse (_:"on":tl:_:br:[]) = parseSwitch On tl br
 parse (_:"off":tl:_:br:[]) = parseSwitch Off tl br
 
-matrix = [(x, y) | x <- [0..999], y <- [0..999]]
+switch (s, p) = (case s of
+      On -> const 1
+      Off -> const 0
+      _ -> \v -> if v == 1 then 0 else 1, p)
 
-between (x1, y1) (x2, y2) (x, y) = x < x1 || x > x2 || y < y1 || y > y2 
+bright (s, p) = (case s of
+      On -> (+1)
+      Off-> \v -> if v == 0 then 0 else v - 1
+      _ -> (+2), p)
 
-switch p val (s, p1, p2)
-  | between p1 p2 p = val
-  | otherwise = case (val, s) of
-      (_, On) -> 1
-      (_, Off) -> 0
-      (0, _) -> 1
-      _ -> 0
+updatey arr f x y1 y2
+  | y1 > y2 = return arr
+  | otherwise = unsafeRead arr i >>= unsafeWrite arr i . f >> updatey arr f x (y1+1) y2
+  where i = x + y1
 
-bright p val (s, p1, p2)
-  | between p1 p2 p = val
-  | otherwise = case (val, s) of
-      (val, On) -> val + 1
-      (val, Off) -> max 0 (val - 1)
-      (val, _) -> val + 2
-      
-summarize folder switches =  map (\cords -> foldl' (folder cords) 0 switches) matrix
+updatex arr f x1 x2 y1 y2
+  | x1 > x2 = return arr
+  | otherwise = updatey arr f (x1*1000) y1 y2 >> updatex arr f (x1+1) x2 y1 y2
 
-solve folder = show . foldl1' (+) . summarize folder . map parse . map words . lines
+update arr (f, ((x1, y1), (x2, y2))) = updatex arr f x1 x2 y1 y2 >> return arr
 
-main = runDay 6 [solve switch, solve bright]
+eval_funs switches arr = mapM (update arr) switches >> return arr
+
+eval_sum :: Int -> Int -> IOUArray Int Int -> IO Int
+eval_sum 1000000 s arr = return s
+eval_sum i s arr = unsafeRead arr i >>= \v -> eval_sum (i+1) (s+v) arr
+
+solve trans input = newArray (0, 999999) 0 >>= eval_funs switches >>= eval_sum 0 0 >>= return . show
+  where switches = map (trans . parse . words) . lines $ input
+        
+main = runDayM 6 [solve switch, solve bright]
