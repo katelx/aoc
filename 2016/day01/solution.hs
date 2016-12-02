@@ -1,6 +1,5 @@
 module Main where
 import Runner
-import Data.List(group,sort)
 
 data Dirs = N|W|S|E
 
