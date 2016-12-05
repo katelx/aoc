@@ -19,7 +19,7 @@ checksum = take 5 . map snd . sortBy numal . foldl calc []
                                   gl -> gl
 
 shift n = map shc
-  where shc c = chr $ mod ((ord c - orda) + n) numa + orda
+  where shc c = chr $ mod (ord c - orda + n) numa + orda
         orda = ord 'a'
         numa = ord 'z' - orda + 1
 
