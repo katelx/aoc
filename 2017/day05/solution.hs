@@ -1,22 +1,16 @@
 module Main where
 import Runner
-import Data.Array.IO
-import Data.Array.Base
 
-walk :: (Int -> Int) -> Int -> Int -> Int -> IOUArray Int Int -> IO Int
-walk update len pos steps arr
-  | pos < 0 || pos >= len = return steps
-  | otherwise = do
-      prev <- unsafeRead arr pos
-      unsafeWrite arr pos (update prev)
-      walk update len (pos + prev) (steps + 1) arr
+import qualified Data.Map as M
 
-solve update input = newListArray (0, len) steps >>= walk update len 0 0 >>= return . show
-  where steps = map read . lines $ input
-        len = length steps
+walk update pos steps m
+  | pos < 0 || pos >= M.size m = steps
+  | otherwise = walk update (pos + prev) (steps + 1) (M.insert pos new m)  
+  where prev = (M.!) m pos
+        new = update prev
 
-inc = (+ 1)
+solve update = show . walk update 0 0 . M.fromList . zip [0..] . map read . lines
 
 inc_dec v = v + if v < 3 then 1 else -1
 
-main = runDayM 5 [solve inc, solve inc_dec]
+main = runDay 5 [solve succ, solve inc_dec]
