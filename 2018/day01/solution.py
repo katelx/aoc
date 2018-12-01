@@ -1,4 +1,4 @@
-from itertools import cycle, dropwhile
+from itertools import cycle, accumulate
 
 
 def parse():
@@ -7,20 +7,6 @@ def parse():
 
 print(sum(parse()))
 
+prev = set()
 
-class Dup:
-    def __init__(self):
-        self.cur = 0
-        self.prev = set()
-
-    def __call__(self, x):
-        self.cur += x
-        found = self.cur in self.prev
-        self.prev.add(self.cur)
-        return not found
-
-
-dup = Dup()
-next(dropwhile(dup, cycle(parse())))
-
-print(dup.cur)
+print(next(x for x in accumulate(cycle(parse())) if x in prev or prev.add(x)))
