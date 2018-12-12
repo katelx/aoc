@@ -1,4 +1,4 @@
-import qualified Data.Map as M
+import qualified Data.IntMap as M
 import Data.List(foldl')
 
 parse mul ws = (zip [1..s] (cycle [1..p]), M.fromList (zip [1..p] (repeat 0)))
