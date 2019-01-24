@@ -9,7 +9,7 @@ execute prev rs prog@(instr, ipr)
   | ip == 28 = r : next (S.insert r prev)
   | otherwise = next prev
   where ip = (M.!) rs ipr
-        r = (M.!) rs 2
+        r = maximum . M.elems $ rs
         next prev' = execute prev' (M.adjust succ ipr (instr !! ip $ rs)) prog
 
 ops = M.fromList [
@@ -41,7 +41,7 @@ ops = M.fromList [
 parse (ipr:prog) = (map (parse' . words) prog, read . drop 4 $ ipr)
   where parse' (op:abc) = let [a, b, c] = map read abc in ((M.!) ops op) a b c
 
-start = M.fromList . zip [0..5] . (: repeat 0) $ 0
+start = M.fromList . zip [0..5] . repeat $ 0
 
 main = let input = execute S.empty start . parse . lines <$> readFile "input" in do
   head <$> input >>= print
